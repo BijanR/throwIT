@@ -8,30 +8,33 @@
 
     <EditText
         android:id="@+id/etName"
-        android:layout_width="370dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="100dp"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_person_white_24dp"
         android:ems="10"
+        android:hint="@string/hint_name"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etUsername"
-        android:layout_width="370dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etName"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
-
         android:inputType="textPersonName"
-        android:text="Username"
+        android:hint="@string/hint_username"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_account_circle_white_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etName" />
@@ -39,30 +42,61 @@
 
     <EditText
         android:id="@+id/etPassword"
-        android:layout_width="370dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etUsername"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="Password"
+        android:hint="@string/hint_password"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_key_white_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etUsername" />
 
     <Button
         android:id="@+id/bRegister"
-        android:layout_width="361dp"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/etPassword"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Register"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/btn_round"
+        android:text="@string/de_btn_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+
+    <ImageView
+        android:id="@+id/img_reg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="236dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintBottom_toTopOf="@+id/etName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_logo_round" />
+
+    <TextView
+        android:id="@+id/register_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:text="@string/Register_txt"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/etName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.101"
+        app:layout_constraintStart_toEndOf="@+id/img_reg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.777" />
 
 </android.support.constraint.ConstraintLayout>
