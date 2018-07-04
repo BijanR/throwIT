@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import de.fh_dortmund.throwit.R;
@@ -63,6 +64,8 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_throw, container, false);
+        FrameLayout mainLayout = (FrameLayout) v.findViewById(R.id.ThrowFrame);
+        mainLayout.setBackgroundColor(getResources().getColor(R.color.colorThemeBackground));
         value = v.findViewById(R.id.lbl_value);
         Button start = v.findViewById(R.id.btn_start);
         mSensorManager = (SensorManager) inflater.getContext().getSystemService(SENSOR_SERVICE);

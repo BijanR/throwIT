@@ -5,5 +5,7 @@
     <color name="colorAccent">#26A599</color>
     <color name="colorBtn">#59585a</color>
     <color name="colorBtnStroke">#ffffff</color>
+    <color name="colorDarkRed">#8b0000</color>
+    <color name="colorThemeBackground">#303030</color>
 
 </resources>
