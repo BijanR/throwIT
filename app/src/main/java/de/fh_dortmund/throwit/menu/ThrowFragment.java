@@ -142,8 +142,7 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
                 Log.i("VertAccelleration: ", ""+verticalAcceleration);
                 value.setText(String.format(Locale.getDefault(),"%.3f", verticalAcceleration));
 
-                tc.add(values, (long)(System.nanoTime() - throwstart));
- {
+                if(!tc.add(values, (long)(System.nanoTime() - throwstart))){
                     mSensorManager.unregisterListener(this);
                     value.setText(String.format(Locale.getDefault(), "%.2f", tc.calculateHeight()));
                 }
