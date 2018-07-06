@@ -16,17 +16,13 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.apache.commons.math3.linear.ArrayRealVector;
-import org.apache.commons.math3.linear.RealVector;
-
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
 import de.fh_dortmund.throwit.R;
+import de.fh_dortmund.throwit.menu.calculations.ThrowCalculator;
 
 import static android.content.Context.SENSOR_SERVICE;
 
@@ -39,17 +35,14 @@ import static android.content.Context.SENSOR_SERVICE;
  * create an instance of this fragment.
  */
 public class ThrowFragment extends Fragment implements SensorEventListener {
-    // TODO: get parameters if needed
+
     private TextView value;
-
-
-    private static final int AVGVALUESSAVED = 10;
     private SensorManager mSensorManager = null;
     private Sensor mAccelerometer = null;
     private double throwstart;
     private OnFragmentInteractionListener mListener;
     private ThrowCalculator tc;
-    private List<Double> lastNValues;
+
     private boolean stopListening = false;
 
     public ThrowFragment() {
@@ -127,20 +120,13 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
     }
 
 
-    private double median(List<Double> values){
-        if(values == null || values.isEmpty())
-            return 0;
-        Collections.sort(values);
-        return values.get(values.size()/2);
 
-    }
 
 
     private void initSensor() {
         mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
         value.setText(String.valueOf("~"));
         tc = new ThrowCalculator();
-        lastNValues = new LinkedList<>();
         throwstart = System.nanoTime();
     }
 
@@ -151,20 +137,13 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
                 // Invertieren da negative Werte Erhöhung der y Koordinate indizieren &
                 // g-Kraft abziehen
                 double verticalAcceleration = (event.values[2] -9.81d);
-
+                double[] values = {event.values[0], event.values[1], verticalAcceleration};
 
                 Log.i("VertAccelleration: ", ""+verticalAcceleration);
                 value.setText(String.format(Locale.getDefault(),"%.3f", verticalAcceleration));
 
-                tc.add(verticalAcceleration, (long)(System.nanoTime() - throwstart));
-                lastNValues.add(0,verticalAcceleration);
-
-                if(lastNValues.size() > AVGVALUESSAVED)
-                    lastNValues.remove(AVGVALUESSAVED);
-
-                if(lastNValues.size() == AVGVALUESSAVED &&
-                        median(lastNValues) < 0 &&
-                        System.nanoTime()-throwstart > 1000000000) {
+                tc.add(values, (long)(System.nanoTime() - throwstart));
+ {
                     mSensorManager.unregisterListener(this);
                     value.setText(String.format(Locale.getDefault(), "%.2f", tc.calculateHeight()));
                 }
