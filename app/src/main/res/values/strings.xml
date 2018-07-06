@@ -10,5 +10,8 @@
     <string name="lvl_measure">m</string>
     <string name="hint_password">Passwort</string>
     <string name="hint_username">Benutzername</string>
+    <string name="hint_name">Name</string>
     <string name="title_activity_temp">Temp</string>
+    <string name="Register_txt">Account erstellen</string>
+    <string name="desc_herausf">Begebe Dich auf eine Höhe von 200m über dem Meeresspiegel und erreiche einen Wurf von 5m.</string>
 </resources>
