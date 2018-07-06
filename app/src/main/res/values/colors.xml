@@ -7,5 +7,7 @@
     <color name="colorBtnStroke">#ffffff</color>
     <color name="colorDarkRed">#8b0000</color>
     <color name="colorThemeBackground">#303030</color>
+    <color name="textLightPrimary">#FFFFFF</color>
+
 
 </resources>

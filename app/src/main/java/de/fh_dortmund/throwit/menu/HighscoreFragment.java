@@ -54,7 +54,6 @@ public class HighscoreFragment extends Fragment {
     @SuppressWarnings("unused")
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -13,7 +13,6 @@ public class RegisterRequest extends StringRequest {
     private Map<String, String> params;
 
     public RegisterRequest(String username, String password, Response.Listener<String> listener){
-
         super(Method.POST, REGISTER_REQUEST_URL, listener, null); // write in PHP-file
         params = new HashMap<>();
         params.put("username", username);

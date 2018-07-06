@@ -1,7 +1,5 @@
 package de.fh_dortmund.throwit.menu;
 
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
