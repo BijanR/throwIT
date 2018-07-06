@@ -1,21 +1,11 @@
 package de.fh_dortmund.throwit.menu;
 
-import android.util.Log;
-
-import org.apache.commons.math3.analysis.UnivariateFunction;
-import org.apache.commons.math3.analysis.integration.RombergIntegrator;
-import org.apache.commons.math3.analysis.integration.UnivariateIntegrator;
-import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
-import org.apache.commons.math3.analysis.interpolation.UnivariateInterpolator;
-import org.apache.commons.math3.analysis.polynomials.PolynomialFunction;
-import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.transform.DftNormalization;
 import org.apache.commons.math3.transform.FastFourierTransformer;
 import org.apache.commons.math3.transform.TransformType;
 import org.apache.commons.math3.util.Pair;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,13 +15,21 @@ import java.util.List;
 public class ThrowCalculator {
     private List<Pair<Double, Long>> accel;
     private static final int DFTSIZE= 16; //DFTSIZE ∊ 2^n da FFT sonst nicht funktioniert!
+    private ThrowFilter tf;
 
     public ThrowCalculator() {
         accel = new LinkedList<>();
+        tf = new ThrowFilter();
     }
 
     public boolean add(Double acceleration, Long timestamp) {
-        return accel.add(new Pair<>(acceleration, timestamp));
+
+        tf.getKf().predict();
+        tf.getKf().correct(new double[] {acceleration});
+        double[] stateEstimate = tf.getKf().getStateEstimation(); //Vector containing a_x, a_y, a_z, a'_x, ..., a''_z
+
+        //we want acceleration in upwards/downwards direction which is at at position 2 (a_z)
+        return accel.add(new Pair<>(stateEstimate[2], timestamp));
     }
 
     /**

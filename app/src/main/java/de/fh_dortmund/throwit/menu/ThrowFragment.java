@@ -16,6 +16,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealVector;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -148,6 +151,8 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
                 // Invertieren da negative Werte Erhöhung der y Koordinate indizieren &
                 // g-Kraft abziehen
                 double verticalAcceleration = (event.values[2] -9.81d);
+
+
                 Log.i("VertAccelleration: ", ""+verticalAcceleration);
                 value.setText(String.format(Locale.getDefault(),"%.3f", verticalAcceleration));
 
