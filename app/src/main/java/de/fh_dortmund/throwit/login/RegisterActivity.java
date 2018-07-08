@@ -28,6 +28,17 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText etPassword = (EditText) findViewById(R.id.etPassword);
         final EditText etName = (EditText) findViewById(R.id.etName);
         final Button bRegister = (Button) findViewById(R.id.bRegister); // create variable for registration
+        final Button back = (Button) findViewById(R.id.back_button);
+
+
+        back.setOnClickListener(new View.OnClickListener(){ // Creating a listener which leads you from the start page to the register page
+            @Override
+            public void onClick(View v){
+                Intent backbutton = new Intent(RegisterActivity.this, Login.class);
+                RegisterActivity.this.startActivity(backbutton);
+            }
+        });
+
 
 
         bRegister.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success"); // PHP-file ??? Variable success nennen?
+                            boolean success = jsonResponse.getBoolean("success"); // Variable is called success
 
                             if(success){
                                 RegisterActivity.this.startActivity(new Intent(RegisterActivity.this, Login.class));

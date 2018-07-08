@@ -1,6 +1,6 @@
 package de.fh_dortmund.throwit.menu.dummy;
 
-import android.hardware.usb.UsbRequest;
+import android.os.Build;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Comparator;
-import java.util.Random;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -124,4 +123,5 @@ public class UserScoreContent {
             return String.valueOf(score);
         }
     }
+
 }
