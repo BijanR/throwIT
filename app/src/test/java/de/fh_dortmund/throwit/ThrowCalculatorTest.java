@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import de.fh_dortmund.throwit.menu.calculations.ThrowCalculator;
 
@@ -28,7 +27,7 @@ public class ThrowCalculatorTest {
     @Test
     public void throwCalculator_OneValue() {
         ThrowCalculator tc = new ThrowCalculator();
-        tc.add(new double[]{0,0,2,2.1}, 0L);
+        tc.add(new double[]{0,2,2.1}, 0L);
         assertTrue(tc.calculateHeight() == 0.0);
     }
 
@@ -36,7 +35,7 @@ public class ThrowCalculatorTest {
     @Test
     public void throwCalculator_addTest() {
         ThrowCalculator tc = new ThrowCalculator();
-        assertTrue(tc.add(new double[]{0,0,2,1.2},0L));
+        assertTrue(tc.add(new double[]{0,0,2.4},0L));
     }
 
 
@@ -62,14 +61,14 @@ public class ThrowCalculatorTest {
         tc.add(new double[]{0,0,1.7}, 1500000000L);
         double height = tc.calculateHeight();
         System.out.println("16 fixed Values: "+height);
-        assertEquals(0.3, height, 0.01);
+        assertEquals(0.3, height, 0.1);
     }
 
 
     @Test
     public void throwCalculator_43Values() {
         ThrowCalculator tc = new ThrowCalculator();
-        List<Pair<Double[],Long>> tmpList = generateTestData(43);
+        List<Pair<double[],Long>> tmpList = generateTestData(43,5);
         for(Pair<double[], Long> p: tmpList)
             tc.add(p.getFirst(),p.getSecond());
         double height = tc.calculateHeight();
@@ -81,8 +80,8 @@ public class ThrowCalculatorTest {
     @Test
     public void throwCalculator_100Values() {
         ThrowCalculator tc = new ThrowCalculator();
-        List<Pair<Double,Long>> tmpList = generateTestData(100);
-        for(Pair<Double, Long> p: tmpList)
+        List<Pair<double[],Long>> tmpList = generateTestData(100,5);
+        for(Pair<double[], Long> p: tmpList)
             tc.add(p.getFirst(),p.getSecond());
         double height = tc.calculateHeight();
         System.out.println("100Values: "+height);
@@ -90,11 +89,62 @@ public class ThrowCalculatorTest {
     }
 
 
+
+
+    @Test
+    public void throwCalculator_100ValuesFaster() {
+        ThrowCalculator tc = new ThrowCalculator();
+        List<Pair<double[],Long>> tmpList = generateTestData(100,25);
+        for(Pair<double[], Long> p: tmpList)
+            tc.add(p.getFirst(),p.getSecond());
+        double height = tc.calculateHeight();
+        System.out.println("100FasterValues: "+height);
+        List<Pair<double[],Long>> tmpList2 = generateTestData(100,5);
+        ThrowCalculator tc2 = new ThrowCalculator();
+        for(Pair<double[], Long> p: tmpList2)
+            tc2.add(p.getFirst(),p.getSecond());
+        double height2 = tc2.calculateHeight();
+        System.out.println("100SlowerValues: "+height2);
+        assertTrue(height > height2);
+    }
+
+
+    @Test
+    public void throwCalculator_100ValuesInSpace() {
+        ThrowCalculator tc = new ThrowCalculator();
+        List<Pair<double[],Long>> tmpList = generateTestData(100,25);
+        for(Pair<double[], Long> p: tmpList)
+            tc.add(p.getFirst(),p.getSecond());
+
+        // Drift with constant velocity for a while
+        Long time = tmpList.get(tmpList.size()-1).getSecond();
+        for(int i = 0; i<500; i++) {
+            time += 100000000L;
+            tc.add(new double[]{0,0,1},time);
+        }
+        double height = tc.calculateHeight();
+        System.out.println("100FasterValuesSpace: "+height);
+
+        List<Pair<double[],Long>> tmpList2 = generateTestData(100,5);
+        ThrowCalculator tc2 = new ThrowCalculator();
+        for(Pair<double[], Long> p: tmpList2)
+            tc2.add(p.getFirst(),p.getSecond());
+
+        Long time2 = tmpList2.get(tmpList2.size()-1).getSecond();
+        for(int i = 0; i<100; i++) {
+            time += 100000000L;
+            tc.add(new double[]{0,0,1},time);
+        }
+        double height2 = tc2.calculateHeight();
+        System.out.println("100SlowerValuesSpace: "+height2);
+        assertTrue(height > height2);
+    }
+
     @Test
     public void throwCalculator_10234Values() {
         ThrowCalculator tc = new ThrowCalculator();
-        List<Pair<Double,Long>> tmpList = generateTestData(10234);
-        for(Pair<Double, Long> p: tmpList)
+        List<Pair<double[],Long>> tmpList = generateTestData(10234,5);
+        for(Pair<double[], Long> p: tmpList)
             tc.add(p.getFirst(),p.getSecond());
         double height = tc.calculateHeight();
         System.out.println("10234Values: "+height);
@@ -102,10 +152,10 @@ public class ThrowCalculatorTest {
     }
 
 
-    private List<Pair<Double,Long>> generateTestData(int k) {
-        List<Pair<Double,Long>> result = new LinkedList<>();
+    private List<Pair<double[],Long>> generateTestData(int k,int factor) {
+        List<Pair<double[],Long>> result = new LinkedList<>();
         for(int i = 0; i < k; i++) {
-            result.add(new Pair<>(Math.random()*5-0.001,i*100000000L));
+            result.add(new Pair<>(new double[] {0,0,Math.random()*factor-0.001},i*100000000L));
         }
         return result;
     }

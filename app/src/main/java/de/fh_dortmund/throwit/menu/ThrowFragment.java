@@ -39,10 +39,10 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
     private TextView value;
     private SensorManager mSensorManager = null;
     private Sensor mAccelerometer = null;
+    private Sensor mLinear = null;
     private double throwstart;
     private OnFragmentInteractionListener mListener;
     private ThrowCalculator tc;
-
     private boolean stopListening = false;
 
     public ThrowFragment() {
@@ -75,6 +75,7 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
         Button start = v.findViewById(R.id.btn_start);
         mSensorManager = (SensorManager) inflater.getContext().getSystemService(SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mLinear = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +126,8 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
 
     private void initSensor() {
         mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+        mSensorManager.registerListener(this, mLinear, SensorManager.SENSOR_DELAY_GAME);
+
         value.setText(String.valueOf("~"));
         tc = new ThrowCalculator();
         throwstart = System.nanoTime();

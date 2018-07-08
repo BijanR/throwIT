@@ -42,7 +42,7 @@ public class ThrowCalculator {
 
 
         double[] stateEstimate = tf.getKf().getStateEstimation(); //Vector containing a_x, a_y, a_z, a'_x, ..., a''_z
-        Log.i("State Estimate: ",""+stateEstimate);
+        //Log.i("State Estimate: ",""+stateEstimate);
         //we want acceleration in upwards/downwards direction which is at at position 2 (a_z)
         accel.add(new Pair<>(stateEstimate[2], timestamp));
         return checkStop(acceleration[2]);

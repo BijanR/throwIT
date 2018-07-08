@@ -18,7 +18,6 @@ public class Menu extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
         ViewPager pager = findViewById(R.id.vpa_menu);
         pager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         pager.setCurrentItem(1);
