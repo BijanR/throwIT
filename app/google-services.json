@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "616477762107",
+    "firebase_url": "https://throwit-f3f6c.firebaseio.com",
+    "project_id": "throwit-f3f6c",
+    "storage_bucket": "throwit-f3f6c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616477762107:android:426d52656e500f86",
+        "android_client_info": {
+          "package_name": "de.fh_dortmund.throwit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "616477762107-0p9rh3terotta243usi2vega8tb0kfnq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBROuDn1H3Fk8qbPkCcfGuOjo6coZ2y8xI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
