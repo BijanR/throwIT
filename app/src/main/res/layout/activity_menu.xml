@@ -6,13 +6,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_dark"
     tools:context=".menu.Menu">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vpa_menu"
         android:layout_width="370dp"
-        android:layout_height="495dp"
+        android:layout_height="500dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
