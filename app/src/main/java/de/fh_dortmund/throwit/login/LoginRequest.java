@@ -10,7 +10,7 @@ import java.util.Map;
 public class LoginRequest extends StringRequest {
 
 
-    private static final String LOGIN_REQUEST_URL = "Domain.php";
+    private static final String LOGIN_REQUEST_URL = "http://h2788431.stratoserver.net/*";
     private Map<String, String> params;
 
     public LoginRequest(String username, String password, Response.Listener<String> listener){
