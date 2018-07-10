@@ -43,7 +43,6 @@ public class HighscoreFragment extends Fragment {
     }
 
     // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static HighscoreFragment newInstance(int columnCount) {
         HighscoreFragment fragment = new HighscoreFragment();
         Bundle args = new Bundle();

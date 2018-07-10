@@ -13,6 +13,7 @@ import java.util.List;
 import de.fh_dortmund.throwit.menu.ThrowCalculatorI;
 
 /**
+ * Calc1: LinAcc, FFT in 16er steps
  * @author Bijan Riesenberg
  */
 public class ThrowCalculator implements ThrowCalculatorI {
@@ -37,9 +38,6 @@ public class ThrowCalculator implements ThrowCalculatorI {
     public boolean add(double[] acceleration, Long timestamp) {
         //tf.getKf().predict();
         //tf.getKf().correct(acceleration);
-
-
-
 
         //double[] stateEstimate = tf.getKf().getStateEstimation(); //Vector containing a_x, a_y, a_z, a'_x, ..., a''_z
         //Log.i("State Estimate: ",""+stateEstimate);

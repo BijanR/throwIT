@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import de.fh_dortmund.throwit.R;
 import de.fh_dortmund.throwit.menu.calculations.ThrowCalculator;
+import de.fh_dortmund.throwit.menu.calculations2.ThrowCalculator2;
 import de.fh_dortmund.throwit.menu.dummy.UserScoreContent;
 
 import static android.content.Context.SENSOR_SERVICE;
@@ -35,14 +36,18 @@ import static android.content.Context.SENSOR_SERVICE;
 public class ThrowFragment extends Fragment implements SensorEventListener {
 
     private TextView value;
+    private TextView value2;
     private SensorManager mSensorManager = null;
     private Sensor mAccelerometer = null;
     private Sensor mLinear = null;
     private double throwstart;
     private OnFragmentInteractionListener mListener;
-    private ThrowCalculatorI tc;
+    private ThrowCalculatorI tc1;
+    private ThrowCalculatorI tc2;
+
     private boolean stopListening = false;
     private boolean startCount;
+    private boolean startCount2;
 
     public ThrowFragment() {
         // Required empty public constructor
@@ -71,6 +76,7 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
         FrameLayout mainLayout = (FrameLayout) v.findViewById(R.id.ThrowFrame);
         mainLayout.setBackgroundColor(getResources().getColor(R.color.colorThemeBackground));
         value = v.findViewById(R.id.lbl_value);
+        value2 = v.findViewById(R.id.lbl_value2);
         Button start = v.findViewById(R.id.btn_start);
         mSensorManager = (SensorManager) inflater.getContext().getSystemService(SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -128,7 +134,11 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
         mSensorManager.registerListener(this, mLinear, SensorManager.SENSOR_DELAY_GAME);
 
         value.setText(String.valueOf("~"));
-        tc = new ThrowCalculator();
+        value2.setText(String.valueOf("~"));
+
+        tc1 = new ThrowCalculator();
+        tc2 = new ThrowCalculator2();
+
         throwstart = System.nanoTime();
     }
 
@@ -139,27 +149,43 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
                 // Invertieren da negative Werte Erhöhung der y Koordinate indizieren &
                 // g-Kraft abziehen
                 if(System.nanoTime()-throwstart < 2000000000L && !startCount)
-                    value.setText("1");
+                    value.setText("1"); value2.setText("1");
+
                 if(System.nanoTime()-throwstart < 1000000000L && !startCount)
-                    value.setText("2");
+                    value.setText("2"); value2.setText("2");
                 if(System.nanoTime()-throwstart < 3000000000L)
                     return;
                 if(!startCount){
                     throwstart = System.nanoTime();
                     startCount = true;
+                    startCount2 = true;
+
                 }
+
 
                 double verticalAcceleration = -1*(event.values[2]);
                 double[] values = {event.values[0], event.values[1], verticalAcceleration};
 
-                Log.i("VertAccelleration: ", ""+verticalAcceleration);
-                value.setText(String.format(Locale.getDefault(),"%.3f", verticalAcceleration));
 
-                if(!tc.add(values, (long)(System.nanoTime() - throwstart))){
+                Log.i("VertAccelleration: ", ""+verticalAcceleration);
+
+
+                value.setText(String.format(Locale.getDefault(),"%.3f", verticalAcceleration));
+                if(!tc1.add(values, (long)(System.nanoTime() - throwstart))){
                     mSensorManager.unregisterListener(this);
-                    double height = tc.calculateHeight();
+                    double height = tc1.calculateHeight();
                     value.setText(String.format(Locale.getDefault(), "%.2f", height));
                     startCount = false;
+                    UserScoreContent.newScore("",height, height);
+                }
+
+
+                value2.setText(String.format(Locale.getDefault(),"%.3f", verticalAcceleration));
+                if(!tc2.add(values, (long)(System.nanoTime() - throwstart))) {
+                    mSensorManager.unregisterListener(this);
+                    double height = tc2.calculateHeight();
+                    value2.setText(String.format(Locale.getDefault(), "%.2f", height));
+                    startCount2 = false;
                     UserScoreContent.newScore("",height, height);
                 }
             }

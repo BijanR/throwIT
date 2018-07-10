@@ -1,7 +1,6 @@
 package de.fh_dortmund.throwit.menu.calculations;
 
 import org.apache.commons.math3.filter.ProcessModel;
-import org.apache.commons.math3.filter.ProcessModel;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.DiagonalMatrix;
