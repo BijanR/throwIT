@@ -102,7 +102,7 @@ public class Login extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signUserIn();
+                launchMenu();
             }
         });
 
@@ -114,6 +114,7 @@ public class Login extends AppCompatActivity {
      */
     private void launchMenu() {
         Intent intent = new Intent(this, Menu.class);
+        intent.putExtra("User", mAuth.getUid());
         startActivity(intent);
     }
 
@@ -139,15 +140,10 @@ public class Login extends AppCompatActivity {
 
     private void updateStatus(){
        // launchMenu();
-        TextView status = (TextView) findViewById(R.id.tvStatus);
+
         FirebaseUser user = mAuth.getCurrentUser();
 
-        if(user != null){
-            status.setText("Signed in" + user.getEmail());
-        }
-        else {
-            status.setText("Signed out");
-        }
+
 
     }
 
