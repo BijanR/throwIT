@@ -1,12 +1,16 @@
 package de.fh_dortmund.throwit.menu;
 
 import android.os.Build;
+import android.util.Log;
 
 public class DeviceInformation {
+
+
 
     public String getDeviceName() { // Getting producer and model information
         String producer = Build.MANUFACTURER;
         String model = Build.MODEL;
+        Log.i("Info", producer+model);
         if (model.toLowerCase().startsWith(producer.toLowerCase())) {
             return capitalize(model);
         } else {
@@ -25,4 +29,5 @@ public class DeviceInformation {
             return Character.toUpperCase(first) + cap.substring(1);
         }
     }
+
 }

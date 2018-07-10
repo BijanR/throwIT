@@ -27,7 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.fh_dortmund.throwit.R;
-import de.fh_dortmund.throwit.menu.DeviceInformation;
 import de.fh_dortmund.throwit.menu.Menu;
 
 /**
@@ -54,7 +53,6 @@ public class Login extends AppCompatActivity {
         final Button bLogin = (Button) findViewById(R.id.btn_login);
         final Button registerLink = (Button) findViewById(R.id.btn_register);
         final Button play = (Button) findViewById(R.id.no_user);
-        final Button device = (Button) findViewById(R.id.device);
 
 
         mAuth = FirebaseAuth.getInstance(); // Get reference to the Firebase auth object
@@ -108,13 +106,6 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        device.setOnClickListener(new View.OnClickListener() { // Getting device information
-           @Override
-           public void onClick(View v){
-               DeviceInformation d = new DeviceInformation();
-               Log.i("device: ",d.getDeviceName());
-           }
-        });
 
     }
 

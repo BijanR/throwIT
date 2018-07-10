@@ -16,13 +16,11 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
 
 import de.fh_dortmund.throwit.R;
 import de.fh_dortmund.throwit.menu.calculations.ThrowCalculator;
+import de.fh_dortmund.throwit.menu.dummy.UserScoreContent;
 
 import static android.content.Context.SENSOR_SERVICE;
 
@@ -42,8 +40,9 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
     private Sensor mLinear = null;
     private double throwstart;
     private OnFragmentInteractionListener mListener;
-    private ThrowCalculator tc;
+    private ThrowCalculatorI tc;
     private boolean stopListening = false;
+    private boolean startCount;
 
     public ThrowFragment() {
         // Required empty public constructor
@@ -136,10 +135,21 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER && !stopListening) {
+            if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION && !stopListening) {
                 // Invertieren da negative Werte Erhöhung der y Koordinate indizieren &
                 // g-Kraft abziehen
-                double verticalAcceleration = (event.values[2] -9.81d);
+                if(System.nanoTime()-throwstart < 2000000000L && !startCount)
+                    value.setText("1");
+                if(System.nanoTime()-throwstart < 1000000000L && !startCount)
+                    value.setText("2");
+                if(System.nanoTime()-throwstart < 3000000000L)
+                    return;
+                if(!startCount){
+                    throwstart = System.nanoTime();
+                    startCount = true;
+                }
+
+                double verticalAcceleration = -1*(event.values[2]);
                 double[] values = {event.values[0], event.values[1], verticalAcceleration};
 
                 Log.i("VertAccelleration: ", ""+verticalAcceleration);
@@ -147,7 +157,10 @@ public class ThrowFragment extends Fragment implements SensorEventListener {
 
                 if(!tc.add(values, (long)(System.nanoTime() - throwstart))){
                     mSensorManager.unregisterListener(this);
-                    value.setText(String.format(Locale.getDefault(), "%.2f", tc.calculateHeight()));
+                    double height = tc.calculateHeight();
+                    value.setText(String.format(Locale.getDefault(), "%.2f", height));
+                    startCount = false;
+                    UserScoreContent.newScore("",height, height);
                 }
             }
     }

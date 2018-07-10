@@ -77,7 +77,7 @@ public class UserScoreContent {
         return ITEMS;
     }
 
-    public void newScore(String name, double multi, double height){
+    public static void newScore(String name, double multi, double height){
         addItem(createUserScoreItem(name, multi, height));
     }
 

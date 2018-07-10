@@ -1,7 +1,5 @@
 package de.fh_dortmund.throwit.menu.calculations;
 
-import android.util.Log;
-
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.transform.DftNormalization;
 import org.apache.commons.math3.transform.FastFourierTransformer;
@@ -12,15 +10,17 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.fh_dortmund.throwit.menu.ThrowCalculatorI;
+
 /**
  * @author Bijan Riesenberg
  */
-public class ThrowCalculator {
+public class ThrowCalculator implements ThrowCalculatorI {
 
 
     private List<Double> lastNValues;
     private List<Pair<Double, Long>> accel;
-    private ThrowFilter tf;
+    //private ThrowFilter tf;
 
 
     private static final int AVGVALUESSAVED = 50;
@@ -30,21 +30,21 @@ public class ThrowCalculator {
     public ThrowCalculator() {
         lastNValues = new LinkedList<>();
         accel = new LinkedList<>();
-        tf = new ThrowFilter();
+      //  tf = new ThrowFilter();
     }
 
 
     public boolean add(double[] acceleration, Long timestamp) {
-        tf.getKf().predict();
-        tf.getKf().correct(acceleration);
+        //tf.getKf().predict();
+        //tf.getKf().correct(acceleration);
 
 
 
 
-        double[] stateEstimate = tf.getKf().getStateEstimation(); //Vector containing a_x, a_y, a_z, a'_x, ..., a''_z
+        //double[] stateEstimate = tf.getKf().getStateEstimation(); //Vector containing a_x, a_y, a_z, a'_x, ..., a''_z
         //Log.i("State Estimate: ",""+stateEstimate);
         //we want acceleration in upwards/downwards direction which is at at position 2 (a_z)
-        accel.add(new Pair<>(stateEstimate[2], timestamp));
+        accel.add(new Pair<>(acceleration[2], timestamp));
         return checkStop(acceleration[2]);
     }
 
